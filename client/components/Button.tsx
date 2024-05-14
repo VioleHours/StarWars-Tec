@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface ButtonProps {
@@ -23,7 +24,7 @@ export default function Button({
     <button className="border-white relative w-[15rem]">
       <Link href={href}>
         <div style={{ filter: imgFilter }}>
-          <img src={imgSrc} alt={imgAlt} />
+          <Image src={imgSrc} alt={imgAlt} width={500} height={300} />
           <h3 className="font-bold text-2xl">
             <span
               className={`bg-gradient-to-r from-${gradientFrom} to-${gradientTo} bg-clip-text text-transparent`}
