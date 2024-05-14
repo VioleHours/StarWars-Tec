@@ -12,15 +12,15 @@ interface FilmsProps {
 }
 
 export default function Films({ films }: FilmsProps) {
+  const sortedFilms = films.sort((a, b) => a.episode_id - b.episode_id);
+
   return (
     <div className="w-full h-full min-h-[100vh] bg-films-wars bg-cover bg-no-repeat bg-center backdrop-blur-sm">
       <div className="w-full h-full min-h-[100vh] backdrop-blur-xs p-4">
-        <h1 className="flex justify-center items-center p-4 text-2xl">
-          Films
-        </h1>
+        <h1 className="flex justify-center items-center p-4 text-2xl">Films</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {films.map((film, index) => (
-            <CardFilms key={index} film={film} />
+          {sortedFilms.map((film) => (
+            <CardFilms key={film.episode_id} film={film} />
           ))}
         </div>
       </div>

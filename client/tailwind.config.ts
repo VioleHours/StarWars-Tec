@@ -8,14 +8,16 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: () => ({
-        'star-wars': "url('/img/pxfuel.jpg')",
-        'films-wars': "url('/img/bgfilm.jpg')",
-        'char-wars': "url('/img/bgchar.jpg')",
+        "star-wars": "url('/img/pxfuel.jpg')",
+        "films-wars": "url('/img/bgfilm.jpg')",
+        "char-wars": "url('/img/bgchar.jpg')",
+        "blue-gradient": "linear-gradient(135deg, #0000FF, #ffffff)",
+        "red-gradient": "linear-gradient(135deg, #FF0000, #000000)",
       }),
       backdropBlur: {
-        xs: '2px',
-      }
+        xs: "2px",
+      },
     },
   },
   plugins: [],
-}
+};
