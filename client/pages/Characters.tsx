@@ -82,7 +82,7 @@ export default function Characters() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredCharacters.map((char, index) => (
-           <CardCharacters key={index} char={char} characterId={index} />
+           <CardCharacters key={index} char={char} />
 
           ))}
         </div>

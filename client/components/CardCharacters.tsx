@@ -13,6 +13,7 @@ interface CardCharacterProps {
 }
 
 export default function CardCharacters({ char }: CardCharacterProps) {
+
   return (
     <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-red-gradient text-white">
       <Image
