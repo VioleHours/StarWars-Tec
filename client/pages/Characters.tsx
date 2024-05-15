@@ -1,3 +1,4 @@
+import BackButton from "@/components/BackButton";
 import CardCharacters from "@/components/CardCharacters";
 import { fetchCharacters, useCharacterStore } from "@/store/CharactersStore";
 import { useEffect } from "react";
@@ -43,6 +44,7 @@ export default function Characters() {
   return (
     <div className="relative w-full min-h-screen overflow-auto bg-char-wars bg-cover bg-no-repeat bg-center backdrop-blur-sm">
       <div className="absolute inset-0 backdrop-blur-xs p-4">
+        <BackButton textColor="white" destination="/" />
         <h1 className="flex justify-center items-center p-4 text-2xl">
           Characters
         </h1>
@@ -80,10 +82,12 @@ export default function Characters() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredCharacters.map((char, index) => (
-            <CardCharacters key={index} char={char} />
+           <CardCharacters key={index} char={char} characterId={index} />
+
           ))}
         </div>
       </div>
     </div>
   );
 }
+

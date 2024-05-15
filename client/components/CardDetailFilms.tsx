@@ -22,9 +22,9 @@ export default function CardDetailFilm({
   character,
 }: CardDetailFilmProps) {
   return (
-    <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-blue-gradient text-black flex flex-row w-[47rem]">
-      <div>
-        <Image src="/img/GenericFilm.jpg" alt="Generic Film" className="h-[30rem] w-[25rem]"/>
+    <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-blue-gradient text-black flex flex-row w-[47rem] md:flex-col">
+      <div className="flex justify-center">
+        <Image src="/img/GenericFilm.jpg" alt="Generic Film" width={600} height={800}/>
       </div>
       <div className="flex flex-col w-full items-center p-4">
         <h2 className="text-lg font-semibold">{film.title}</h2>
