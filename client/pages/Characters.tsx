@@ -1,48 +1,43 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { GetStaticProps } from "next";
-import CardCharacters, { Character } from "@/components/CardCharacters";
+import CardCharacters from "@/components/CardCharacters";
+import { fetchCharacters, useCharacterStore } from "@/store/CharactersStore";
+import { useEffect } from "react";
 
-interface CharactersProps {
-  characters: Character[];
-}
+export default function Characters() {
+  const {
+    filteredCharacters,
+    eyeColors,
+    genders,
+    selectedEyeColor,
+    selectedGender,
+    setSelectedEyeColor,
+    setSelectedGender,
+    resetFilters,
+  } = useCharacterStore();
 
-export default function Characters({ characters }: CharactersProps) {
-  const [filteredCharacters, setFilteredCharacters] = useState<Character[]>(characters);
-  const [eyeColors, setEyeColors] = useState<string[]>([]);
-  const [genders, setGenders] = useState<string[]>([]);
-  const [selectedEyeColor, setSelectedEyeColor] = useState<string>("");
-  const [selectedGender, setSelectedGender] = useState<string>("");
-
-  // Filtrar personajes cuando cambian las opciones de filtro
   useEffect(() => {
-    let filteredChars = characters;
+    fetchCharacters();
+  }, []);
 
-    if (selectedEyeColor !== "") {
-      filteredChars = filteredChars.filter(char => char.eye_color === selectedEyeColor);
-    }
+  useEffect(() => {
+    const filteredChars = useCharacterStore
+      .getState()
+      .characters.filter((char) => {
+        if (selectedEyeColor !== "" && char.eye_color !== selectedEyeColor) {
+          return false;
+        }
 
-    if (selectedGender !== "") {
-      filteredChars = filteredChars.filter(char => char.gender === selectedGender);
-    }
+        if (selectedGender !== "" && char.gender !== selectedGender) {
+          return false;
+        }
 
-    setFilteredCharacters(filteredChars);
+        return true;
+      });
+
+    useCharacterStore.setState({ filteredCharacters: filteredChars });
   }, [selectedEyeColor, selectedGender]);
 
-  // Obtener opciones de filtro
-  useEffect(() => {
-    const eyeColorSet = new Set(characters.map(char => char.eye_color));
-    const genderSet = new Set(characters.map(char => char.gender));
-
-    // Eliminar opciones vacías
-    setEyeColors(Array.from(eyeColorSet).filter(color => color.trim() !== ""));
-    setGenders(Array.from(genderSet).filter(gender => gender.trim() !== ""));
-  }, [characters]);
-
-  // Reiniciar filtros
-  const resetFilters = () => {
-    setSelectedEyeColor("");
-    setSelectedGender("");
+  const handleResetFilters = () => {
+    resetFilters();
   };
 
   return (
@@ -54,27 +49,31 @@ export default function Characters({ characters }: CharactersProps) {
         <div className="flex justify-center space-x-4 p-4">
           <select
             className="px-4 py-2 border border-gray-300 rounded-md text-black"
-            onChange={e => setSelectedEyeColor(e.target.value)}
+            onChange={(e) => setSelectedEyeColor(e.target.value)}
             value={selectedEyeColor}
           >
             <option value="">Select Eye Color</option>
-            {eyeColors.map(option => (
-              <option key={option} value={option}>{option}</option>
+            {eyeColors.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
             ))}
           </select>
           <select
             className="px-4 py-2 border border-gray-300 rounded-md text-black"
-            onChange={e => setSelectedGender(e.target.value)}
+            onChange={(e) => setSelectedGender(e.target.value)}
             value={selectedGender}
           >
             <option value="">Select Gender</option>
-            {genders.map(option => (
-              <option key={option} value={option}>{option}</option>
+            {genders.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
             ))}
           </select>
           <button
             className="px-4 py-2 bg-red-500 text-white rounded-md"
-            onClick={resetFilters}
+            onClick={handleResetFilters}
           >
             Reset Filters
           </button>
@@ -88,50 +87,3 @@ export default function Characters({ characters }: CharactersProps) {
     </div>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  try {
-    const characters = await getCharacters("https://swapi.dev/api/people/");
-    const filteredCharacters = characters.map((character) => {
-      const filteredProperties: Character = {
-        name: "",
-        eye_color: "",
-        gender: "",
-      };
-      Object.entries(character).forEach(([key, value]) => {
-        if (value !== "n/a" && value !== "unknown") {
-          filteredProperties[key] = String(value);
-        }
-      });
-      return filteredProperties;
-    });
-
-    return {
-      props: {
-        characters: filteredCharacters,
-      },
-    };
-  } catch (error) {
-    console.error("Error fetching characters:", error);
-    return {
-      props: {
-        characters: [],
-      },
-    };
-  }
-};
-
-const getCharacters = async (
-  url: string,
-  allCharacters: any[] = []
-): Promise<any[]> => {
-  const response = await axios.get(url);
-  const characters = response.data.results;
-  allCharacters = [...allCharacters, ...characters];
-
-  if (response.data.next) {
-    return getCharacters(response.data.next, allCharacters);
-  } else {
-    return allCharacters;
-  }
-};
