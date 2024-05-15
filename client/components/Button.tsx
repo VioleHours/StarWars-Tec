@@ -29,7 +29,7 @@ export default function Button({
           <Image src={imgSrc} alt={imgAlt} width={500} height={300} />
           <h3 className="font-bold text-2xl">
             <span
-              className={`text-${color} bg-clip-text`}
+              className={`${color} bg-clip-text `}
             >
               {title}
             </span>

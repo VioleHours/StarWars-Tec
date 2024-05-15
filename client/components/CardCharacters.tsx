@@ -6,7 +6,6 @@ export interface Character {
   name: string;
   eye_color: string;
   gender: string;
-  [key: string]: string;
 }
 
 interface CardCharacterProps {
@@ -17,7 +16,7 @@ interface CardCharacterProps {
 export default function CardCharacters({ char }: CardCharacterProps){
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-blue-gradient text-black">
+    <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-red-gradient text-white">
       <Image
         src="/img/GenericCharacter.jpg"
         alt="Generic Character"
@@ -29,7 +28,7 @@ export default function CardCharacters({ char }: CardCharacterProps){
       <p className="text-sm">Gender: {char.gender}</p>
   
       <Link href={`/Films`}>
-        <p className="text-blue-500 hover:underline">View Details</p>
+        <p className="text-red-500 hover:underline">View Details</p>
       </Link>
     </div>
   );
