@@ -11,8 +11,7 @@ export default function Home() {
             imgAlt="Jedi Emblem"
             imgFilter="drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.7))"
             title="FILMS"
-            gradientFrom="blue-500"
-            gradientTo="blue-200"
+            color="blue-500"
           />
           <Button
             href="/Characters"
@@ -20,8 +19,7 @@ export default function Home() {
             imgAlt="Imperial Emblem"
             imgFilter="drop-shadow(0px 4px 4px rgba(51, 51, 51, 0.7))"
             title="CHARACTERS"
-            gradientFrom="red-950"
-            gradientTo="red-600"
+            color="red-500"
           />
         </div>
       </div>

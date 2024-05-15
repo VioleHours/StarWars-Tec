@@ -12,7 +12,9 @@ interface FilmsProps {
 }
 
 export default function Films({ films }: FilmsProps) {
-  const sortedFilms = films.sort((a, b) => a.episode_id - b.episode_id);
+  const sortedFilms = films
+    ? films.sort((a, b) => a.episode_id - b.episode_id)
+    : [];
 
   return (
     <div className="w-full h-full min-h-[100vh] bg-films-wars bg-cover bg-no-repeat bg-center backdrop-blur-sm">
@@ -29,12 +31,21 @@ export default function Films({ films }: FilmsProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await axios.get("http://localhost:3000/api/films");
-  const films = response.data;
+  try {
+    const response = await axios.get("https://swapi.dev/api/films/");
+    const films = response.data.results;
 
-  return {
-    props: {
-      films,
-    },
-  };
+    return {
+      props: {
+        films,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching films:", error);
+    return {
+      props: {
+        films: [],
+      },
+    };
+  }
 };

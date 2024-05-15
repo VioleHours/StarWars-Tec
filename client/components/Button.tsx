@@ -7,8 +7,9 @@ interface ButtonProps {
   imgAlt: string;
   imgFilter: string;
   title: string;
-  gradientFrom: string;
-  gradientTo: string;
+  gradientFrom?: string;
+  gradientTo?: string;
+  color: string
 }
 
 export default function Button({
@@ -19,6 +20,7 @@ export default function Button({
   title,
   gradientFrom,
   gradientTo,
+  color
 }: ButtonProps) {
   return (
     <button className="border-white relative w-[15rem]">
@@ -27,7 +29,7 @@ export default function Button({
           <Image src={imgSrc} alt={imgAlt} width={500} height={300} />
           <h3 className="font-bold text-2xl">
             <span
-              className={`bg-gradient-to-r from-${gradientFrom} to-${gradientTo} bg-clip-text text-transparent`}
+              className={`text-${color} bg-clip-text`}
             >
               {title}
             </span>
