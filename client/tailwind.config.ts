@@ -14,8 +14,23 @@ module.exports = {
         "blue-gradient": "linear-gradient(135deg, #0000FF, #ffffff)",
         "red-gradient": "linear-gradient(135deg, #FF0000, #000000)",
       }),
+
       backdropBlur: {
         xs: "2px",
+      },
+
+      screens: {
+        "2xl": { max: "1535px" },
+
+        xl: { max: "1279px" },
+
+        lg: { min: "1023px" },
+
+        md: { max: "767px" },
+
+        sm: { max: "639px" },
+
+        xs: { max: "479px" },
       },
     },
   },
